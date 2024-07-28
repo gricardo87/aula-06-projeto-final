@@ -57,6 +57,9 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID}}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_vm_admin_password }}
+      with:
+        name: private_key.pem
+        path: private_key.pem
 
       - name: Check if nginx is installed
         id: check-nginx-installed
@@ -73,3 +76,5 @@ jobs:
         run: ansible-playbook -i ./ansible/inventory.ini ./ansible/playbook.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: false
+      with:
+        name: private_key.pem
