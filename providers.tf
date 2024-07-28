@@ -2,9 +2,9 @@ terraform {
   required_version = ">=0.12"
 
   backend "azurerm" {
-    resource_group_name  = "tfstate"
-    storage_account_name = "gricardo87puc"
-    container_name       = "tfstate-puc"
+    resource_group_name  = "state-tf"
+    storage_account_name = "statetfgr"
+    container_name       = "tfstatepuc"
     key                  = "prod.terraform.tfstate"
   }
 
