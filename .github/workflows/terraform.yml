@@ -57,6 +57,9 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID}}
           TF_VAR_vm_password: ${{ secrets.TF_VAR_vm_admin_password }}
+          
+      - name: Upload chave privada
+        uses: actions/upload-artifact@v3
         with:
           name: private_key.pem
           path: private_key.pem
@@ -71,10 +74,14 @@ jobs:
             echo "::set-output name=nginx_installed::false"
           fi
 
+      - name: Download chave privada
+        uses: actions/download-artifact@v3
+        with:
+          name: private_key.pem
+
       - name: Execute ansible playbook
         if: steps.check-nginx-installed.outputs.nginx_installed != 'false'
         run: ansible-playbook -i ./ansible/inventory.ini ./ansible/playbook.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: false
-        with:
-          name: private_key.pem
+
